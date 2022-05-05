@@ -1,128 +1,25 @@
-<!-- 
 <div class="card">
-  <h5>Left Align</h5>
-  <p-timeline [value]="events1">
-    <ng-template pTemplate="content" let-event>
-      &#123;&#123;event.status&#125;&#125;
-    </ng-template>
-  </p-timeline>
-</div>
-
-<div class="card">
-  <h5>Right Align</h5>
-  <p-timeline [value]="events1" align="right">
-    <ng-template pTemplate="content" let-event>
-      &#123;&#123;event.status&#125;&#125;
-    </ng-template>
-  </p-timeline>
-</div>
-
-<div class="card">
-  <h5>Alternate Align</h5>
-  <p-timeline [value]="events1" align="alternate">
-    <ng-template pTemplate="content" let-event>
-      &#123;&#123;event.status&#125;&#125;
-    </ng-template>
-  </p-timeline>
-</div>
-
-<div class="card">
-  <h5>Opposite Content</h5>
-  <p-timeline [value]="events1">
-    <ng-template pTemplate="content" let-event>
-      <small class="p-text-secondary">&#123;&#123;event.date&#125;&#125;</small>
-    </ng-template>
-    <ng-template pTemplate="opposite" let-event>
-      &#123;&#123;event.status&#125;&#125;
-    </ng-template>
-  </p-timeline>
-</div>
-
-<div class="card">
-  <h5>Customized</h5>
-  <p-timeline
-    [value]="events1"
-    align="alternate"
-    styleClass="customized-timeline"
-  >
-    <ng-template pTemplate="marker" let-event>
-      <span
-        class="custom-marker p-shadow-2"
-        [style.backgroundColor]="event.color"
-      >
-        <i [ngClass]="event.icon"></i>
-      </span>
-    </ng-template>
-    <ng-template pTemplate="content" let-event>
-      <p-card [header]="event.status" [subheader]="event.date">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-          sed consequuntur error repudiandae numquam deserunt quisquam repellat
-          libero asperiores earum nam nobis, culpa ratione quam perferendis
-          esse, cupiditate neque quas!
-        </p>
-        <button pButton label="Read more" class="p-button-text"></button>
-      </p-card>
-    </ng-template>
-  </p-timeline>
-</div>
--->
-<div class="card">
-  <!--
-	<h5>Horizontal</h5>
-	<h6>Top Align</h6>
-	<p-timeline [value]="events2" layout="horizontal" align="top">
-		<ng-template pTemplate="content" let-event>
-			&#123;&#123;event&#125;&#125;
-		</ng-template>
-	</p-timeline>
-
-	<h6>Bottom Align</h6>
-	<p-timeline [value]="events2" layout="horizontal" align="bottom">
-		<ng-template pTemplate="content" let-event>
-			&#123;&#123;event&#125;&#125;
-		</ng-template>
-	</p-timeline>
-
-	<h6>Alternate Align</h6>
-	<p-timeline [value]="events2" layout="horizontal" align="alternate">
-		<ng-template pTemplate="content" let-event>
-			&#123;&#123;event&#125;&#125;
-		</ng-template>
-		<ng-template pTemplate="opposite" let-event>
-			&nbsp;
-		</ng-template>
-	</p-timeline>
--->
   <h6>Timeline con información por meses</h6>
   <div style="width: 200%">
     <p-timeline [value]="entriesPerMonth" layout="horizontal" align="top">
       <ng-template pTemplate="marker" let-entry>
-        <div
-          style="display: -webkit-flex;-webkit-flex-direction: column;display: flex;flex-direction: column;"
+        <span
+          class="custom-marker p-shadow-2"
+          [style.background]="entry.events ? 'blue' : 'grey'"
         >
-          <span
-            class="custom-marker p-shadow-2"
-            [style.background]="entry.events ? entry.color : 'black'"
-            [style.height]="entry.events ? '32px' : '16px'"
-            [style.width]="entry.events ? '32px' : '16px'"
-          >
-            <!--<span style="color: black; margin-bottom: 75px">{{ entry.label }}</span>-->
-            <!-- <i [ngClass]="event.icon"></i> -->
-          </span>
-          <!-- <p *ngFor="let event of entry.events" style="font-size:10px" [style.backgroundColor]="event.color" >{{ event.date }} - {{ event.label }}</p> -->
-        </div>
+        </span>
       </ng-template>
       <ng-template pTemplate="content" let-entry>
-        <p
+        <button
           *ngFor="let event of entry.events"
-          style="font-size:10px"
-          [style.backgroundColor]="event.color"
-        >
-          {{ event.date }} - {{ event.label }}
-          <!-- Fecha y Label del evento debería salir con un estilo tipo tarjeta con un fondo del color event.color -->
-          <!-- tooltip con {{ event.description }} TODO la descripción debería salir al sobrevolar el evento -->
-        </p>
+          type="button"
+          pButton
+          pRipple
+          style="font-size:10px; text-align: left"
+          [label]="event.date + ' - ' + event.label"
+          [class]="'p-button-' + event.severity"
+          [pTooltip]="event.description"
+        ></button>
       </ng-template>
       <ng-template pTemplate="opposite" let-entry style="max-height: 10px">
         <span>{{ entry.label }}</span>
